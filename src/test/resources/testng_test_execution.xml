@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="BDDSuiteSeqExec" thread-count="1">
+    <test name="BDDTest">
+        <classes>
+            <class name="com.epam.api.RunCucumberTest">
+            </class>
+        </classes>
+    </test>
+</suite>
