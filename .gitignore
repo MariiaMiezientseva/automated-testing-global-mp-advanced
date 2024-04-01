@@ -1,0 +1,65 @@
+### Gradle ###
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+build/
+out/
+/metastore_db/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### IntelliJ IDEA ###
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+*.iws
+*.iml
+*.ipr
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### IDEs and editors ###
+/**/target/
+target/
+/**/.idea/
+/**/.classpath
+/**/.project
+/**/.settings
+/**/.factorypath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+**/*.iml
+**/*.txt
+
+### Terraform ###
+.terraform*
+
+### System Files ###
+.DS_STORE
+Thumbs.db
+
+temp/
+*.js
+/.java-version
+**/allure-results/
+/logs
+*.log
+*.html
+*.jar
+.run/
+/**/build/
