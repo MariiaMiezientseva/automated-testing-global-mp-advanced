@@ -1,0 +1,18 @@
+{
+  "conditions": [
+    {
+      "condition": "cnt",
+      "filteringField": "name",
+      "value": "api"
+    }
+  ],
+  "description": "updated via api test",
+  "name": "API TEST FILTER",
+  "orders": [
+    {
+      "isAsc": false,
+      "sortingColumn": "startTime"
+    }
+  ],
+  "type": "launch"
+}
