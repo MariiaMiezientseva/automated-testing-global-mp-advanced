@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Integration with Report Portal">
+    <listeners>
+        <listener class-name="com.epam.reportportal.testng.ReportPortalTestNGListener"/>
+    </listeners>
+    <test verbose="1" name="RP Integration Test">
+        <classes>
+            <class name="com.epam.ui.FiltersJourneyTest"/>
+        </classes>
+    </test>
+</suite>
