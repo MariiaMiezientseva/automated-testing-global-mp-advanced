@@ -1,6 +1,10 @@
-package com.epam.model.filter.get;
+package com.epam.model.filter.response;
 
-import lombok.*;
+import com.epam.model.filter.ConditionDto;
+import com.epam.model.filter.OrderDto;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;

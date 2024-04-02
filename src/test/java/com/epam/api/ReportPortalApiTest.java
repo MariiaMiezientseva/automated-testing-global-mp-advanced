@@ -1,15 +1,14 @@
 package com.epam.api;
 
-import com.epam.model.filter.get.FilterResponseDto;
-import com.epam.model.filter.get.GetFiltersResponseDto;
-import com.epam.model.filter.update.ErrorMessageDto;
-import com.epam.model.filter.update.MessageDto;
+import com.epam.helper.RequestBodyHelper;
+import com.epam.model.filter.response.ErrorMessageDto;
+import com.epam.model.filter.response.FilterResponseDto;
+import com.epam.model.filter.response.GetFiltersResponseDto;
+import com.epam.model.filter.response.MessageDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
 
 import static com.epam.constant.Constants.*;
 
@@ -18,28 +17,35 @@ public class ReportPortalApiTest extends BaseTest {
 
     @Test
     void userShouldGetAllProjectFilters() {
-        var response = client.get(String.format(BASE_URL, String.format(FILTER, PROJECT_NAME)), GetFiltersResponseDto.class);
-        Assertions.assertThat(response.getPage().getTotalElements()).isEqualTo(2);
+        var response = client.get(String.format(baseUrl, String.format(FILTER, projectName)), GetFiltersResponseDto.class);
+        Assertions.assertThat(response.getPage().getTotalElements()).isEqualTo(1);
     }
 
     @Test
     void userShouldGetFilterById() {
-        FilterResponseDto response = client.get(String.format(BASE_URL, String.format(FILTER_BY_ID, PROJECT_NAME, id)), FilterResponseDto.class);
+        FilterResponseDto response = client.get(
+                String.format(baseUrl, String.format(FILTER_BY_ID, projectName, id)),
+                FilterResponseDto.class);
         Assertions.assertThat(response.getName()).isEqualTo(TEST_FILTER_NAME);
     }
 
     @Test
     void userShouldUpdateFilterById() {
-        File body = new File(UPDATE_FILTER_REQUEST_BODY);
-        String message = client.put(String.format(BASE_URL, String.format(FILTER_BY_ID, PROJECT_NAME, id)), body,
-                MessageDto.class, 200).getMessage();
+        String message = client.put(
+                        String.format(baseUrl, String.format(FILTER_BY_ID, projectName, id)),
+                        RequestBodyHelper.getBodyForUpdateFilterRequest(),
+                        MessageDto.class, 200)
+                .getMessage();
         Assertions.assertThat(message).isEqualTo(String.format(UPDATE_MESSAGE_TEMPLATE, id));
     }
 
     @Test
     void userShouldNotUpdateListOfFilters() {
-        File body = new File(UPDATE_FILTERS_REQUEST_BODY);
-        var response = client.put(String.format(BASE_URL, String.format(FILTER, PROJECT_NAME)), body, ErrorMessageDto.class, 500);
+        var response = client.put(
+                String.format(baseUrl, String.format(FILTER, projectName)),
+                RequestBodyHelper.getBodyForUpdateFiltersRequest(String.valueOf(id)),
+                ErrorMessageDto.class,
+                500);
         LOGGER.warn("Internal Server Error occurs. Response message: {}", response.getMessage());
         Assertions.assertThat(response.getErrorCode()).isEqualTo(5000);
     }

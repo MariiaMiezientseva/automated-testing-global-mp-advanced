@@ -32,8 +32,8 @@ dependencies {
     testImplementation("com.epam.reportportal:agent-java-junit5:$rpJavaAgent")
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
     testImplementation("org.assertj:assertj-core:$assertJVersion")
-    testImplementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
-    testImplementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
 
@@ -48,7 +48,7 @@ fun configureTestLogging(logging: TestLoggingContainer) {
     logging.exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 }
 
-tasks.getByName<Test>("test") {
+tasks.test {
     useJUnitPlatform() {
         configureTestLogging(testLogging)
     }

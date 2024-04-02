@@ -1,4 +1,4 @@
-package com.epam.model.filter.get;
+package com.epam.model.filter.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

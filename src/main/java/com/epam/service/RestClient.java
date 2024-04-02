@@ -2,18 +2,28 @@ package com.epam.service;
 
 import io.restassured.http.ContentType;
 
-import java.io.File;
 import java.util.Map;
 
-import static com.epam.constant.Constants.*;
+import static com.epam.constant.Constants.CREATE_TOKEN;
 import static io.restassured.RestAssured.given;
 
 public class RestClient {
-    private final static String token = System.getenv(TOKEN);
+    private final String userName;
+    private final String password;
+    private final String rpToken;
+    private final String baseUrl;
+
+    public RestClient() {
+        PropertyHolderService propertyHolderService = new PropertyHolderService();
+        this.userName = propertyHolderService.getOrSystem("rp.user-name", "ADMIN");
+        this.password = propertyHolderService.getOrSystem("rp.password", "PASSWORD");
+        this.rpToken = propertyHolderService.getOrSystem("rp.token", "RP_TOKEN");
+        this.baseUrl = propertyHolderService.getOrSystem("rp.endpoint", "BASE_URL") + "/%s";
+    }
 
     public <T> T get(String url, Class<T> clazz) {
         return given()
-                .header("Authorization", "bearer " + token)
+                .header("Authorization", "bearer " + rpToken)
                 .get(url)
                 .then()
                 .assertThat()
@@ -25,18 +35,18 @@ public class RestClient {
 
     public int get(String url) {
         return given()
-                .header("Authorization", "bearer " + token)
+                .header("Authorization", "bearer " + rpToken)
                 .get(url)
                 .then()
                 .extract()
                 .statusCode();
     }
 
-    public <T> T post(String url, String bodyPath, Class<T> clazz) {
+    public <T> T post(String url, Object body, Class<T> clazz) {
         return given()
-                .header("Authorization", "bearer " + token)
+                .header("Authorization", "bearer " + rpToken)
                 .contentType(ContentType.JSON)
-                .body(new File(bodyPath))
+                .body(body)
                 .post(url)
                 .then()
                 .assertThat()
@@ -46,9 +56,9 @@ public class RestClient {
                 .as(clazz);
     }
 
-    public <T> T put(String url, File body, Class<T> clazz, int statusCode) {
+    public <T> T put(String url, Object body, Class<T> clazz, int statusCode) {
         return given()
-                .header("Authorization", "bearer " + token)
+                .header("Authorization", "bearer " + rpToken)
                 .contentType(ContentType.JSON)
                 .body(body)
                 .put(url)
@@ -61,7 +71,7 @@ public class RestClient {
 
     public <T> T delete(String url, Class<T> clazz) {
         return given()
-                .header("Authorization", "bearer " + token)
+                .header("Authorization", "bearer " + rpToken)
                 .contentType(ContentType.JSON)
                 .delete(url)
                 .then()
@@ -72,13 +82,13 @@ public class RestClient {
                 .as(clazz);
     }
 
-    //should return "access_token" according to ReportPortal docs - https://reportportal.io/docs/reportportal-configuration/HowToGetAnAccessTokenInReportPortal#1-authorization-with-users-login-and-password
-    //but returns 401 Unauthorized, that's why workaround provides into README file
+    //should return "access_token" according to ReportPortal docs - https://reportportal.io/docs/reportportal-configuration/HowToGetAnAccessTOKENInReportPortal#1-authorization-with-users-login-and-password
+    //but returns 500 Internal Server Error with message "Unclassified error [could not extract ResultSet]", that's why workaround provides into README file
     private String getToken() {
         return given()
                 .relaxedHTTPSValidation()
-                .body(Map.of("grant_type", "password", "username", System.getenv(ADMIN), "password", System.getenv(PASSWORD)))
-                .post(String.format(BASE_URL, CREATE_TOKEN))
+                .body(Map.of("grant_type", "password", "username", userName, "password", password))
+                .post(String.format(baseUrl, CREATE_TOKEN))
                 .then()
                 .assertThat()
                 .statusCode(200)

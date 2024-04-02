@@ -1,4 +1,4 @@
-package com.epam.model.filter.update;
+package com.epam.model.filter.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,6 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ErrorMessageDto implements Serializable {
-    private String message;
-    private Integer errorCode;
+public class CreateFilterResponseDto implements Serializable {
+    private Integer id;
 }
