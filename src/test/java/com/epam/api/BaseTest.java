@@ -7,10 +7,11 @@ import com.epam.service.PropertyHolderService;
 import com.epam.service.RestClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInfo;
+
+import org.testng.ITestContext;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -31,7 +32,7 @@ public abstract class BaseTest {
     protected static String rpEndpoint;
     protected static String baseUrl;
 
-    @BeforeAll
+    @BeforeClass
     public static void setUp() {
         client = new RestClient();
         propertyHolderService = new PropertyHolderService();
@@ -52,14 +53,14 @@ public abstract class BaseTest {
         LOGGER.info("New filter with id {} is created.", id);
     }
 
-    @BeforeEach
-    void setUp(TestInfo testInfo) {
+    @BeforeTest
+    void setUp(ITestContext testInfo) {
         testStartTime = LocalDateTime.now(ZoneOffset.UTC);
-        testName = testInfo.getDisplayName();
+        testName = testInfo.getName();
         LOGGER.info("{} test started at: {}", testName, testStartTime);
     }
 
-    @AfterAll
+    @AfterClass
     public static void tearDown() {
         //delete testing filter
         int expectedStatus = client.get(String.format(baseUrl, String.format(FILTER_BY_ID, projectName, id)));

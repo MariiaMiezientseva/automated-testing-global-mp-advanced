@@ -8,14 +8,14 @@ group = "group=com.epam.automated.testing.global.mp.advanced"
 version = "1.0-SNAPSHOT"
 
 val lombokVersion: String by extra
-val junitVersion: String by extra
-val junit5Version: String by extra
+val testNgVersion: String by extra
 val restAssuredVersion: String by extra
 val assertJVersion: String by extra
 val commonIoVersion: String by extra
 val log4jVersion: String by extra
 val rpJavaClient: String by extra
 val rpJavaAgent: String by extra
+val testNgEngineVersion: String by extra
 
 repositories {
     mavenLocal()
@@ -29,13 +29,13 @@ dependencies {
     implementation("org.projectlombok:lombok:$lombokVersion")
 
     testImplementation("com.epam.reportportal:client-java:$rpJavaClient")
-    testImplementation("com.epam.reportportal:agent-java-junit5:$rpJavaAgent")
-    testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+    testImplementation("com.epam.reportportal:agent-java-testng:$rpJavaAgent")
+    testImplementation("org.testng:testng:$testNgVersion")
     testImplementation("org.assertj:assertj-core:$assertJVersion")
     implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
 
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+   testRuntimeOnly("org.junit.support:testng-engine:$testNgEngineVersion")
 
     testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
@@ -49,7 +49,7 @@ fun configureTestLogging(logging: TestLoggingContainer) {
 }
 
 tasks.test {
-    useJUnitPlatform() {
+    useTestNG() {
         configureTestLogging(testLogging)
     }
 }

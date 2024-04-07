@@ -8,7 +8,7 @@ import com.epam.model.filter.response.MessageDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 
 import static com.epam.constant.Constants.*;
 
