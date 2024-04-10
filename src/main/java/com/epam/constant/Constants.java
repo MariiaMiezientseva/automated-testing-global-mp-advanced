@@ -9,4 +9,6 @@ public final class Constants {
     public static final String CREATE_FILTER_REQUEST_BODY = "src/test/resources/body/createFilterRequestBody.json";
     public static final String UPDATE_FILTER_REQUEST_BODY = "src/test/resources/body/updateFilterRequestBody.json";
     public static final String UPDATE_FILTERS_REQUEST_BODY = "src/test/resources/body/updateFiltersRequestBody.json";
+    public static final String CSV_FILE = "src/test/resources/create_body_data.csv";
+    public static final String DELIMITER = ",";
 }

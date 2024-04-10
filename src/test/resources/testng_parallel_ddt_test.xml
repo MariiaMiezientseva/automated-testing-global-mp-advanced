@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="DataDrivenSuite" thread-count="1" data-provider-thread-count="1">
+    <test name="DataDrivenTest">
+        <classes>
+            <class name="com.epam.api.DataDrivenWithDataProviderTest">
+            </class>
+        </classes>
+    </test>
+</suite>

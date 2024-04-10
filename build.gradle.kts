@@ -27,15 +27,16 @@ dependencies {
     implementation("io.rest-assured:rest-assured:$restAssuredVersion")
     implementation("org.hamcrest:hamcrest-all:1.3")
     implementation("org.projectlombok:lombok:$lombokVersion")
+    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
+    implementation("com.github.hemanthsridhar:testng-ext-dataprovider:14.3.0")
 
     testImplementation("com.epam.reportportal:client-java:$rpJavaClient")
     testImplementation("com.epam.reportportal:agent-java-testng:$rpJavaAgent")
     testImplementation("org.testng:testng:$testNgVersion")
     testImplementation("org.assertj:assertj-core:$assertJVersion")
-    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
-    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
 
-   testRuntimeOnly("org.junit.support:testng-engine:$testNgEngineVersion")
+    testRuntimeOnly("org.junit.support:testng-engine:$testNgEngineVersion")
 
     testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
@@ -51,5 +52,6 @@ fun configureTestLogging(logging: TestLoggingContainer) {
 tasks.test {
     useTestNG() {
         configureTestLogging(testLogging)
+        maxParallelForks = Runtime.getRuntime().availableProcessors()
     }
 }

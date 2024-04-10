@@ -18,7 +18,7 @@ public class ReportPortalApiTest extends BaseTest {
     @Test
     void userShouldGetAllProjectFilters() {
         var response = client.get(String.format(baseUrl, String.format(FILTER, projectName)), GetFiltersResponseDto.class);
-        Assertions.assertThat(response.getPage().getTotalElements()).isEqualTo(1);
+        Assertions.assertThat(response.getPage().getTotalElements()).isGreaterThanOrEqualTo(1);
     }
 
     @Test

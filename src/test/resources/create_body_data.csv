@@ -1,0 +1,6 @@
+conditions_filteringField,conditions_condition,conditions_value,description,name,orders_sortingColumn,orders_isAsc,type
+name,cnt,api,description1,name1,startTime,false,launch
+compositeAttribute,has,api,description2,name2,startTime,true,testitem
+compositeAttribute,has,api,description4,name4,startTime,true,launch
+name,cnt,api,description5,name5,startTime,false,testitem
+name,cnt,api,description6,name6,startTime,false,testitem
