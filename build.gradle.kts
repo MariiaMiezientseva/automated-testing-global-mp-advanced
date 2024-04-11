@@ -16,6 +16,7 @@ val commonIoVersion: String by extra
 val log4jVersion: String by extra
 val rpJavaClient: String by extra
 val rpJavaAgent: String by extra
+val dataProviderVersion: String by extra
 
 repositories {
     mavenLocal()
@@ -27,13 +28,15 @@ dependencies {
     implementation("io.rest-assured:rest-assured:$restAssuredVersion")
     implementation("org.hamcrest:hamcrest-all:1.3")
     implementation("org.projectlombok:lombok:$lombokVersion")
+    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
+    implementation("com.github.hemanthsridhar:testng-ext-dataprovider:$dataProviderVersion")
 
     testImplementation("com.epam.reportportal:client-java:$rpJavaClient")
     testImplementation("com.epam.reportportal:agent-java-junit5:$rpJavaAgent")
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
     testImplementation("org.assertj:assertj-core:$assertJVersion")
-    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
-    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
 
