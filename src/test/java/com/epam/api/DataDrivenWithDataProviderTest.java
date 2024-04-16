@@ -52,23 +52,52 @@ public class DataDrivenWithDataProviderTest {
     }
 
     @ParameterizedTest
-    @DisplayName("Create filters in parallel")
-    @MethodSource("createBody")
-    public void createFilterTest(FilterRequestDto requestDto) {
-        LOGGER.info("Extracted from CSV value: {}", requestDto);
+    @DisplayName("Create filters from 1 dataset")
+    @MethodSource("createFilterWithBodyFrom1DataSet")
+    public void createFilterWithFilteringFieldNameTest(FilterRequestDto requestDto) {
         int id = client.post(
                         String.format(baseUrl, String.format(FILTER, projectName)),
                         requestDto,
                         CreateFilterResponseDto.class
                 )
                 .getId();
-        LOGGER.info("New filter with id {} is created by Thread: {}.", id, Thread.currentThread().getId());
+        logFilterCreationById(id);
         ids.add(id);
-        System.out.println("Ids are: " + ids);
+        logTotalTestIds(ids);
     }
 
-    public static Object[][] createBody() throws Exception {
-        ExtUtils extract = new CSVUtils(CSV_FILE, true);
+    @ParameterizedTest
+    @DisplayName("Create filters from 2 dataset")
+    @MethodSource("createFilterWithBodyFrom2DataSet")
+    public void createFilterWithFilteringFieldCompositeAttributeTest(FilterRequestDto requestDto) {
+        int id = client.post(
+                        String.format(baseUrl, String.format(FILTER, projectName)),
+                        requestDto,
+                        CreateFilterResponseDto.class
+                )
+                .getId();
+        logFilterCreationById(id);
+        ids.add(id);
+        logTotalTestIds(ids);
+    }
+
+    @ParameterizedTest
+    @DisplayName("Create filters from 3 dataset")
+    @MethodSource("createFilterWithBodyFrom3DataSet")
+    public void createFilterFromThirdDataSetTest(FilterRequestDto requestDto) {
+        int id = client.post(
+                        String.format(baseUrl, String.format(FILTER, projectName)),
+                        requestDto,
+                        CreateFilterResponseDto.class
+                )
+                .getId();
+        logFilterCreationById(id);
+        ids.add(id);
+        logTotalTestIds(ids);
+    }
+
+    public static Object[][] createFilterWithBodyFrom1DataSet() throws Exception {
+        ExtUtils extract = new CSVUtils(FIRST_BODY, true);
         String[][] rows = extract.parseData();
         Object[][] objects = new Object[extract.parseData().length][1];
         for (int i = 0; i < rows.length; i++) {
@@ -89,5 +118,61 @@ public class DataDrivenWithDataProviderTest {
                     .build();
         }
         return objects;
+    }
+
+    public static Object[][] createFilterWithBodyFrom2DataSet() throws Exception {
+        ExtUtils extract = new CSVUtils(SECOND_BODY, true);
+        String[][] rows = extract.parseData();
+        Object[][] objects = new Object[extract.parseData().length][1];
+        for (int i = 0; i < rows.length; i++) {
+            String[] row = rows[i];
+            objects[i][0] = FilterRequestDto.builder()
+                    .conditions(List.of(ConditionDto.builder()
+                            .condition(row[1])
+                            .filteringField(row[0])
+                            .value(row[2])
+                            .build()))
+                    .description(row[3])
+                    .name(row[4])
+                    .orders(List.of(OrderDto.builder()
+                            .isAsc(Boolean.valueOf(row[6]))
+                            .sortingColumn(row[5])
+                            .build()))
+                    .type(row[7])
+                    .build();
+        }
+        return objects;
+    }
+
+    public static Object[][] createFilterWithBodyFrom3DataSet() throws Exception {
+        ExtUtils extract = new CSVUtils(THIRD_BODY, true);
+        String[][] rows = extract.parseData();
+        Object[][] objects = new Object[extract.parseData().length][1];
+        for (int i = 0; i < rows.length; i++) {
+            String[] row = rows[i];
+            objects[i][0] = FilterRequestDto.builder()
+                    .conditions(List.of(ConditionDto.builder()
+                            .condition(row[1])
+                            .filteringField(row[0])
+                            .value(row[2])
+                            .build()))
+                    .description(row[3])
+                    .name(row[4])
+                    .orders(List.of(OrderDto.builder()
+                            .isAsc(Boolean.valueOf(row[6]))
+                            .sortingColumn(row[5])
+                            .build()))
+                    .type(row[7])
+                    .build();
+        }
+        return objects;
+    }
+
+    private void logFilterCreationById(int id) {
+        LOGGER.info("New filter with 'id' = {} is created by Thread: {}.", id, Thread.currentThread().getId());
+    }
+
+    private void logTotalTestIds(List<Integer> ids) {
+        LOGGER.info("Created ids are: {}", ids);
     }
 }

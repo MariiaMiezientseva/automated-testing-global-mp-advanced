@@ -1,13 +1,10 @@
 package com.epam.service;
 
 import io.restassured.http.ContentType;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import static io.restassured.RestAssured.given;
 
 public class RestClient {
-    private static final Logger LOGGER = LogManager.getLogger(RestClient.class);
     private final String rpToken;
 
 
@@ -38,7 +35,6 @@ public class RestClient {
     }
 
     public <T> T post(String url, Object body, Class<T> clazz) {
-        LOGGER.info("URL={}, token={}, body={}", url, rpToken, body);
         return given()
                 .header("Authorization", "bearer " + rpToken)
                 .contentType(ContentType.JSON)

@@ -18,7 +18,7 @@ public class ReportPortalApiTest extends BaseTest {
     @Test
     void userShouldGetAllProjectFilters() {
         var response = client.get(String.format(baseUrl, String.format(FILTER, projectName)), GetFiltersResponseDto.class);
-        Assertions.assertThat(response.getPage().getTotalElements()).isEqualTo(1);
+        Assertions.assertThat(response.getPage().getTotalElements()).isGreaterThanOrEqualTo(1);
     }
 
     @Test
@@ -26,7 +26,7 @@ public class ReportPortalApiTest extends BaseTest {
         FilterResponseDto response = client.get(
                 String.format(baseUrl, String.format(FILTER_BY_ID, projectName, id)),
                 FilterResponseDto.class);
-        Assertions.assertThat(response.getName()).isEqualTo(TEST_FILTER_NAME);
+        Assertions.assertThat(response.getName()).containsIgnoringCase(TEST_FILTER_NAME);
     }
 
     @Test

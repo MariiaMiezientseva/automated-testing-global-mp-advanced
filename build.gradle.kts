@@ -2,7 +2,10 @@ import org.gradle.api.tasks.testing.logging.TestLoggingContainer
 
 plugins {
     id("java")
+    id("io.qameta.allure-report") version "2.11.2"
 }
+
+apply(plugin = "io.qameta.allure-report")
 
 group = "group=com.epam.automated.testing.global.mp.advanced"
 version = "1.0-SNAPSHOT"
@@ -17,10 +20,13 @@ val log4jVersion: String by extra
 val rpJavaClient: String by extra
 val rpJavaAgent: String by extra
 val dataProviderVersion: String by extra
+val allureReportPluginVersion: String by extra
 
 repositories {
     mavenLocal()
-    mavenCentral()
+    maven {
+        url = uri("https://plugins.gradle.org/m2/")
+    }
 }
 
 dependencies {
@@ -34,8 +40,14 @@ dependencies {
 
     testImplementation("com.epam.reportportal:client-java:$rpJavaClient")
     testImplementation("com.epam.reportportal:agent-java-junit5:$rpJavaAgent")
+
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+
+    testImplementation("io.qameta.allure.gradle.report:allure-report-plugin:$allureReportPluginVersion")
+    testImplementation("io.qameta.allure:allure-junit5:$junit5Version")
+
     testImplementation("org.assertj:assertj-core:$assertJVersion")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
@@ -55,4 +67,5 @@ tasks.test {
     useJUnitPlatform() {
         configureTestLogging(testLogging)
     }
+    maxParallelForks = Runtime.getRuntime().availableProcessors()
 }

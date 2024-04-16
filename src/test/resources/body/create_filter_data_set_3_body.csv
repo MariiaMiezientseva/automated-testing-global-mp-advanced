@@ -1,0 +1,6 @@
+conditions_filteringField,conditions_condition,conditions_value,description,name,orders_sortingColumn,orders_isAsc,type
+name,!cnt,epam,description15,name15,startTime,false,Launch
+name,!cnt,ReportPortal,description12,name12,startTime,false,Launch
+name,ne,epam,description13,name13,startTime,false,Launch
+name,eq,New_filter444,description14,name14,startTime,false,Launch
+name,eq,api,description16,name16,startTime,false,Launch

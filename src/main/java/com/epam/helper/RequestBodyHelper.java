@@ -24,7 +24,7 @@ public class RequestBodyHelper {
         return FilterRequestDto.builder()
                 .conditions(List.of(conditions))
                 .description("Filter, created via api test")
-                .name("Api-test filter")
+                .name("Api test filter 1")
                 .orders(List.of(orders))
                 .type("launch")
                 .build();
@@ -33,7 +33,7 @@ public class RequestBodyHelper {
     public static FilterRequestDto getBodyForUpdateFilterRequest() {
         FilterRequestDto bodyForUpdate = getBodyForCreateFilterRequest();
         bodyForUpdate.setDescription("updated via api test");
-        bodyForUpdate.setName("API TEST FILTER");
+        bodyForUpdate.setName("API TEST FILTER 2");
         return bodyForUpdate;
     }
 
@@ -45,7 +45,7 @@ public class RequestBodyHelper {
                 .conditions(List.of(conditions))
                 .description("Updated filters form api tests via POST")
                 .id(id)
-                .name("API TEST FILTER")
+                .name("API TEST FILTER 3")
                 .orders(List.of(orders))
                 .type("launch")
                 .build();
