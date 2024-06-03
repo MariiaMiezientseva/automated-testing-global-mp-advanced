@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="UISuite" thread-count="1">
+    <test name="UITest">
+        <classes>
+            <class name="com.epam.ui.FiltersJourneyTest">
+            </class>
+        </classes>
+    </test>
+</suite>
